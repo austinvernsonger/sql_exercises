@@ -1,0 +1,106 @@
+Select the names of all the products in the store.
+SELECT names
+  FROM products;
+
+Select the names and the prices of all the products in the store.
+SELECT name, price 
+  FROM products;
+
+Select the name of the products with a price less than or equal to $200.
+SELECT name
+  FROM products
+  WHERE price <= 200;
+
+
+
+Select all the products with a price between $60 and $120.
+SELECT *
+  FROM products
+  WHERE price BETWEEN 60 AND 120;
+
+Select the name and price in cents (i.e., the price must be multiplied by 100).
+SELECT name, price * 100
+  FROM products;
+
+Compute the average price of all the products.
+SELECT AVG(price)
+  FROM products;
+
+Compute the average price of all products with manufacturer code equal to 2.
+SELECT AVG(price)
+  FROM products WHERE code = 2;
+
+
+
+Compute the number of products with a price larger than or equal to $180.
+SELECT COUNT(*) 
+  FROM Products
+  WHERE Price >= 180;
+
+Select the name and price of all products with a price larger than or equal to $180, and sort first by price (in descending order), and then by name (in ascending order).
+SELECT name, price
+  FROM products
+  WHERE price >= 180
+  ORDER BY price DESC, name;
+
+
+Select all the data from the products, including all the data for each product's manufacturer.
+SELECT *
+  FROM products JOIN manufacturers
+  ON manufacturer = manufacturers.code;
+
+
+Select the product name, price, and manufacturer name of all the products.
+SELECT products.name, price, Manufacturers.name 
+  FROM products JOIN manufacturers
+  ON manufacturer = manufacturers.code;
+
+Select the average price of each manufacturer's products, showing only the manufacturer's code.
+SELECT AVG(price), manufacturers.code
+  FROM manufacturers JOIN produts
+  ON manufacturer = manufacturers.code
+  GROUP BY manufacturers.code;
+
+Select the average price of each manufacturer's products, showing the manufacturer's name.
+SELECT AVG(price), manufacturers.name
+  FROM manufacturers JOIN products 
+  ON manufacturer = manufacturers.code
+  GROUP BY manufacturers.code;
+
+Select the names of manufacturer whose products have an average price larger than or equal to $150.
+SELECT manufacturers.name
+  FROM manufacturers JOIN products
+  ON manufacturer = manufacturers.code
+  GROUP BY manufacturers.code
+  HAVING price >= 150;
+
+Select the name and price of the cheapest product.
+SELECT name, price FROM products ORDER BY price LIMIT 1;
+
+Select the name of each manufacturer along with the name and price of its most expensive product.
+SELECT manufacturers.name, MAX(price) 
+FROM manufacturers JOIN products
+  ON manufacturer = manufacturers.code
+GROUP BY manufacturers.code;
+
+Add a new product: Loudspeakers, $70, manufacturer 2.
+INSERT INTO products
+VALUES (11, "Loudspeakers", 70, 2);
+
+Update the name of product 8 to "Laser Printer".
+UPDATE products
+SET name = "Laser Printer"
+WHERE code = 8;
+
+Apply a 10% discount to all products.
+UPDATE products
+SET price = price * 0.9;
+
+Apply a 10% discount to all products with a price larger than or equal to $120.
+UPDATE products
+SET price = price * 0.9
+WHERE price >= 120;
+
+# Schema commands 
+.schema  products
+.schema manufacturers
