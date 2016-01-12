@@ -1,0 +1,11 @@
+List all the scientists' names, their projects' names, and the hours worked by
+that scientist on each project, in alphabetical order of project name, then
+scientist name.
+
+SELECT Scientists.Name, Projects.Name, Projects.Hours
+  FROM AssignedTo 
+    JOIN Projects
+      ON Projects.Code = AssignedTo.Project
+    JOIN Scientists
+      ON AssignedTo.Scientist = Scientists.SSN
+  ORDER BY Projects.Name, Scientists.Name;

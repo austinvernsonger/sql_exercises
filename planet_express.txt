@@ -1,0 +1,38 @@
+
+Who  receieved a 1.5kg package?
+SELECT Client.Name
+  FROM Client JOIN Package
+    ON Package.Recipient = Client.AccountNumber
+  WHERE Package.Weight = 1.5;
+
+ What is the total weight of all the packages that he sent?
+ SELECT SUM(Weight)
+  FROM Package
+  WHERE Sender = 
+  (
+   SELECT Client.AccountNumber
+     FROM Client JOIN Package
+       ON Package.Recipient = Client.AccountNumber
+     WHERE Package.Weight = 1.5
+  );
+
+
+    
+
+ Which pilots transported those packages?
+ SELECT Employee.Name
+  FROM Employee JOIN Shipment
+    ON Manager = EmployeeID
+  WHERE ShipmentId IN
+    (
+      SELECT Shipment FROM Package
+        WHERE Sender = 
+          (
+            SELECT Client.AccountNumber
+               FROM Client JOIN Package
+                 ON Package.Recipient = Client.AccountNumber
+               WHERE Package.Weight = 1.5
+           )
+    );
+            
+
